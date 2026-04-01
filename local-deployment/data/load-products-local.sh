@@ -18,6 +18,10 @@ TABLE_NAME="ecommerce-products"
 ENDPOINT="http://localhost:4566"
 REGION="$1"
 
+# Dummy credentials for LocalStack (no real AWS account needed)
+export AWS_ACCESS_KEY_ID=test
+export AWS_SECRET_ACCESS_KEY=test
+
 echo "Loading products into LocalStack DynamoDB"
 echo "Table: $TABLE_NAME"
 echo "Endpoint: $ENDPOINT"
@@ -26,9 +30,9 @@ echo ""
 
 # Check if LocalStack is running
 echo "Checking if LocalStack is running..."
-if ! curl -s "$ENDPOINT" > /dev/null 2>&1; then
+if ! curl -s "$ENDPOINT/_localstack/health" > /dev/null 2>&1; then
     echo "Error: LocalStack is not running or not accessible at $ENDPOINT"
-    echo "Please start LocalStack with: docker compose up -d"
+    echo "Please start LocalStack with: docker-compose up -d"
     exit 1
 fi
 
