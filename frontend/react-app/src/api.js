@@ -1,6 +1,6 @@
 import awsConfig from './aws-config';
 
-const API_BASE_URL = awsConfig.API.baseUrl || process.env.REACT_APP_API_URL || 'http://localhost:8080/api';
+const API_BASE_URL = (awsConfig.API && awsConfig.API.baseUrl) || process.env.REACT_APP_API_URL || 'http://localhost:8080/api';
 
 // Get authentication headers
 const getAuthHeaders = async () => {
