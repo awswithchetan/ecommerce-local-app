@@ -22,16 +22,22 @@ Uses Docker Compose + LocalStack to simulate AWS services entirely on your machi
 | ALB + API Gateway | Nginx |
 | Cognito | Real AWS Cognito (free tier) |
 
-## Quick Start
+## What You'll Build
 
-1. **Install prerequisites** — `bash install-prerequisites.sh`
-2. **Set up Cognito** — create a User Pool in AWS Console
-3. **Configure frontend** — add your Cognito IDs to `frontend/react-app/src/aws-config.js`
-4. **Start backend** — `cd local-deployment && AWS_REGION=<region> docker compose up -d`
-5. **Load products** — `cd local-deployment/data && bash load-products-local.sh <region>`
-6. **Start frontend** — `cd frontend/react-app && npm install && npm start`
+A fully functional eCommerce application running entirely on your local machine:
 
-See [local-deployment/README.md](local-deployment/README.md) for detailed steps.
+- **Product catalog** — browse 20 sample products with images, descriptions, and pricing
+- **User authentication** — sign up and sign in via AWS Cognito (real Cognito, free tier)
+- **Shopping cart** — add/remove items, persisted per user in DynamoDB (LocalStack)
+- **Order placement** — checkout from cart, inventory updated, order saved to PostgreSQL
+- **Email notifications** — order confirmation emails generated via SNS → SQS → notification service, saved as files locally for inspection
+- **API gateway** — Nginx routes all frontend requests to the correct microservice, simulating AWS ALB + API Gateway
+
+All AWS services (DynamoDB, SNS, SQS, SES) run locally via LocalStack. Only Cognito uses real AWS (no cost for the usage in this tutorial).
+
+## Getting Started
+
+See [local-deployment/README.md](local-deployment/README.md) for step-by-step instructions.
 
 ## Project Structure
 
