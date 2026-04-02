@@ -87,25 +87,7 @@ Note down:
 - **User Pool ID** (e.g., `ap-south-1_xxxxxxxxx`)
 - **App Client ID** (e.g., `1a2b3c4d5e6f7g8h9i0j1k2l3m`)
 
-### 2. Configure Frontend
-
-Edit `frontend/react-app/src/aws-config.js`:
-
-```javascript
-const awsConfig = {
-  Auth: {
-    Cognito: {
-      userPoolId: 'ap-south-1_xxxxxxxxx',
-      userPoolClientId: '1a2b3c4d5e6f7g8h9i0j1k2l3m',
-      loginWith: {
-        email: true,
-      },
-    }
-  }
-};
-```
-
-### 3. Start Backend Services
+### 2. Start Backend Services
 
 ```bash
 cd local-deployment
@@ -143,7 +125,7 @@ CONTAINER ID   IMAGE                                   PORTS
 ...            postgres:15-alpine                      0.0.0.0:5433->5432/tcp
 ```
 
-### 4. Load Product Data
+### 3. Load Product Data
 
 ```bash
 cd local-deployment/data
@@ -151,6 +133,24 @@ bash load-products-local.sh
 ```
 
 This loads 20 sample products into local DynamoDB.
+
+### 4. Configure Frontend
+
+Edit `frontend/react-app/src/aws-config.js`:
+
+```javascript
+const awsConfig = {
+  Auth: {
+    Cognito: {
+      userPoolId: 'ap-south-1_xxxxxxxxx',
+      userPoolClientId: '1a2b3c4d5e6f7g8h9i0j1k2l3m',
+      loginWith: {
+        email: true,
+      },
+    }
+  }
+};
+```
 
 ### 5. Start Frontend
 
