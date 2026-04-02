@@ -22,14 +22,14 @@ awslocal dynamodb create-table \
     --attribute-definitions AttributeName=product_id,AttributeType=S \
     --key-schema AttributeName=product_id,KeyType=HASH \
     --billing-mode PAY_PER_REQUEST \
-    --region $AWS_REGION
+    --region $AWS_REGION 2>/dev/null || echo "Table ecommerce-products already exists, skipping."
 
 awslocal dynamodb create-table \
     --table-name ecommerce-cart \
     --attribute-definitions AttributeName=user_id,AttributeType=S \
     --key-schema AttributeName=user_id,KeyType=HASH \
     --billing-mode PAY_PER_REQUEST \
-    --region $AWS_REGION
+    --region $AWS_REGION 2>/dev/null || echo "Table ecommerce-cart already exists, skipping."
 
 # Create SNS topic
 echo "Creating SNS topic..."

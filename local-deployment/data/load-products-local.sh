@@ -36,23 +36,29 @@ if ! curl -s "$ENDPOINT/_localstack/health" > /dev/null 2>&1; then
     exit 1
 fi
 
-# Check if table exists, create if it doesn't
-echo "Checking if products table exists..."
-if ! aws dynamodb describe-table --table-name "$TABLE_NAME" --endpoint-url "$ENDPOINT" --region "$REGION" > /dev/null 2>&1; then
-    echo "Table $TABLE_NAME does not exist. Creating..."
-    aws dynamodb create-table \
-        --table-name "$TABLE_NAME" \
-        --attribute-definitions AttributeName=product_id,AttributeType=S \
-        --key-schema AttributeName=product_id,KeyType=HASH \
-        --billing-mode PAY_PER_REQUEST \
-        --endpoint-url "$ENDPOINT" \
-        --region "$REGION" > /dev/null
-    
-    echo "Table $TABLE_NAME created successfully"
-    sleep 2
-else
-    echo "Table $TABLE_NAME already exists"
-fi
+# Create tables if they don't exist
+create_table_if_missing() {
+    local table=$1
+    local attr_def=$2
+    local key_schema=$3
+    if ! aws dynamodb describe-table --table-name "$table" --endpoint-url "$ENDPOINT" --region "$REGION" > /dev/null 2>&1; then
+        echo "Table $table does not exist. Creating..."
+        aws dynamodb create-table \
+            --table-name "$table" \
+            --attribute-definitions $attr_def \
+            --key-schema $key_schema \
+            --billing-mode PAY_PER_REQUEST \
+            --endpoint-url "$ENDPOINT" \
+            --region "$REGION" > /dev/null
+        echo "Table $table created successfully"
+        sleep 2
+    else
+        echo "Table $table already exists"
+    fi
+}
+
+create_table_if_missing "ecommerce-products" "AttributeName=product_id,AttributeType=S" "AttributeName=product_id,KeyType=HASH"
+create_table_if_missing "ecommerce-cart" "AttributeName=user_id,AttributeType=S" "AttributeName=user_id,KeyType=HASH"
 echo ""
 
 # Check if AWS CLI is installed
