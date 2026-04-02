@@ -8,6 +8,7 @@ services:
       - SERVICES=dynamodb,sns,sqs,ses
       - DEBUG=1
       - AWS_REGION=${AWS_REGION:-us-east-1}
+      - AWS_DEFAULT_REGION=${AWS_REGION:-us-east-1}
     volumes:
       - "./localstack-init:/etc/localstack/init/ready.d"
     networks:

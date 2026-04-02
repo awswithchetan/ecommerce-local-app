@@ -3,7 +3,7 @@
 echo "Initializing LocalStack resources..."
 
 # Get region from environment variable, default to us-east-1
-AWS_REGION=${AWS_REGION:-us-east-1}
+AWS_REGION=${AWS_DEFAULT_REGION:-${AWS_REGION:-us-east-1}}
 echo "Using AWS region: $AWS_REGION"
 
 # Wait for LocalStack to be ready
