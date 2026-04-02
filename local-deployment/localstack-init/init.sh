@@ -7,7 +7,12 @@ AWS_REGION=${AWS_REGION:-us-east-1}
 echo "Using AWS region: $AWS_REGION"
 
 # Wait for LocalStack to be ready
-sleep 5
+echo "Waiting for LocalStack to be ready..."
+until awslocal dynamodb list-tables --region $AWS_REGION > /dev/null 2>&1; do
+    echo "LocalStack not ready yet, retrying in 2s..."
+    sleep 2
+done
+echo "LocalStack is ready!"
 
 # Create DynamoDB tables
 echo "Creating DynamoDB tables..."
