@@ -1,5 +1,9 @@
 # eCommerce Local App
 
+This repo is a part of my youtube video where I have explained the architecture and detailed steps to deploy this application:
+
+Video: [https://youtu.be/KUjDQNJBAks](https://youtu.be/XNTDCvtYTLw)
+
 Local development environment for the eCommerce microservices application.
 Uses Docker Compose + LocalStack to simulate AWS services entirely on your machine.
 
